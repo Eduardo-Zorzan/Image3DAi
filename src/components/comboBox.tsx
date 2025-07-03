@@ -10,10 +10,10 @@ export const ComboBox = () => {
     })
 
     return (
-        <div>
-            <div id="drlFiles" className="bg-white w-md rounded">
-                <select className="w-md text-black"></select>
+        <>
+            <div id="drlFiles" className="rounded w-full items-center flex bg-gray-200">
+                <select className="w-full p-1"></select>
             </div>
-        </div>
+        </>
     );
 }

@@ -75,7 +75,7 @@ export const Viewer = () => {
         if (!imageName) {
             return;
         }
-        //image_1748997384314_.png
+        
         const loadEnvironment = (resolution: string, type: string) => {
             loader.load(`/uploads/${imageName}`, (texture) => {
                 texture.mapping = THREE.EquirectangularReflectionMapping;
