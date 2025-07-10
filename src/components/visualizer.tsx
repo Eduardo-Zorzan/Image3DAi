@@ -4,6 +4,7 @@ import { permanentRedirect } from "next/navigation";
 import { faCube } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ComboBox } from "./comboBox";
+import $ from "jquery";
 
 export const Visualizer = () => {
 

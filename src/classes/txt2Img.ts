@@ -1,6 +1,7 @@
 export type txt2imgRequest = {
     prompt: string;
-    steps: number;
+    steps: number | null;
+    nameFile: string | null;
 };
 
 export type txt2imgResponse = {

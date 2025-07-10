@@ -1,24 +1,27 @@
 "use client";
 
-import { useState } from "react";
 import $ from "jquery";
 
 import { progressResponse } from "@/classes/progress";
-import { CircularProgressbar } from 'react-circular-progressbar';
 import { createDrlFiles } from '@/helpers/createDropdown';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import 'react-circular-progressbar/dist/styles.css';
 import '@fortawesome/fontawesome-svg-core/styles.css'
 
-export const Prompt = () => {
-    const [loading, setLoading] = useState(false);
-    const [percentage, setPercentage] = useState(0);
+type PromptProps = {
+    returnLoading: (value: boolean) => void;
+    returnPercentage: (value: number) => void;
+};
+  
+
+export const Prompt = ({returnLoading, returnPercentage} : PromptProps) => {
     
     const handleSubmit = async () => {
-        setLoading(true)
+        returnLoading(true)
 
         const prompt = document.getElementById("prompt") as HTMLTextAreaElement;
+        const nameFile = document.getElementById("nameFile") as HTMLInputElement;
 
         const pooling = async () => {
             const interval = setInterval(async () => {
@@ -28,28 +31,32 @@ export const Prompt = () => {
             
                     const progressResult: progressResponse = await progress.json();
                     
-                    setPercentage(Math.round(progressResult.progress * 100));
+                    returnPercentage(Math.round(progressResult.progress * 100));
                     console.log(progressResult.progress)
-                    if (progressResult.progress === 1 || progressResult.progress === 0)
+                    if (progressResult.progress === 1 || progressResult.progress === 0) {
+                        returnLoading(false);
                         clearInterval(interval);
+                    }
             }, 200)
         }
 
         await pooling();
+
         const response = await fetch("/api/AI", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            prompt: prompt.value
+            prompt: prompt.value,
+            nameFile: nameFile ? nameFile.value : "image",
         }),
         })
 
         const data = await response.json();
         console.log(data);
         createDrlFiles();
-        setLoading(false);
+        returnLoading(false);
         
     }
 
@@ -66,7 +73,7 @@ export const Prompt = () => {
                 placeholder="Enter your prompt here..."
             />
             <div className="flex flex-column justify-between gap-2 w-full text-lg">
-                <input className="w-full bg-gray-200 mt-2 rounded-md shadow-sm sm:text-lg block focus:border-blue-500 px-1" type="text" 
+                <input id="nameFile" className="w-full bg-gray-200 mt-2 rounded-md shadow-sm sm:text-lg block focus:border-blue-500 px-1" type="text" 
                  placeholder="Enter the name of the 3D ambient generated"/>
                 <button
                     type="submit"
@@ -78,14 +85,7 @@ export const Prompt = () => {
                     <p className="ml-2 text-center">Send</p>
                 </button>
 
-            </div>
-
-            {loading ? 
-            <div className="bg-black bg-opacity-50 w-full h-full absolute">
-                <div className="w-sm h-auto">
-                <CircularProgressbar value={percentage} text={`${percentage}%`} />
-                </div>
-            </div> : <p></p>}
+            </div>            
         </div>
     );
 }

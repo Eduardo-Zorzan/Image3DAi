@@ -5,7 +5,7 @@ import { progressResponse } from "@/classes/progress";
 
 export const GET = async (req: NextRequest) => {
     try {
-    const res = await fetch('http://127.0.0.1:7860/sdapi/v1/progress', {
+    const res = await fetch('http://192.168.18.38:7860/sdapi/v1/progress', {
         method: 'GET',
     })
     if (!res.ok) {
