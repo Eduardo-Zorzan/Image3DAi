@@ -1,8 +1,7 @@
 "use client";
 
-import { permanentRedirect } from "next/navigation";
 import { faCube } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";1
 import { ComboBox } from "./comboBox";
 import $ from "jquery";
 
@@ -11,9 +10,10 @@ export const Visualizer = () => {
     const redirectToVisualizer = () => {
         const select : HTMLSelectElement = $("#drlFiles select")[0] as HTMLSelectElement;
 
-        if (select && select.selectedOptions.length > 0) {name
+        if (select && select.selectedOptions.length > 0) {
             const optionSelected = select.selectedOptions[0];
-            permanentRedirect(`/3D?fileName=${optionSelected.value}`);
+            const rootUrl : String = window.location.origin
+            window.open(`${rootUrl}/3D?fileName=${optionSelected.value}`, "_blank");
         }
     }
 

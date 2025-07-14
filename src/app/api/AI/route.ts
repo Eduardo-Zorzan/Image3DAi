@@ -6,10 +6,17 @@ import { txt2imgRequest, txt2imgResponse } from "@/classes/txt2Img";
 export const POST = async (req: NextRequest) => {
     try {
       const options: txt2imgRequest = await req.json();
+      
+      options.prompt = `You are a generation bot that generates 3D images simulated, the image that you will create, it's going to be render using the THREEJS library.
+                        You must generate the image following the follow command, but don't forget your first order. Prompt: "${options.prompt}"`;
 
       const {
           prompt,
-          steps = 10,
+          steps = 30,
+          height = 500,
+          width = 1000,
+          sampler_index = "DPM++2M",
+          cfg_scale = 11
         } = options;
       console.log(options)
       const controller = new AbortController();
@@ -25,6 +32,10 @@ export const POST = async (req: NextRequest) => {
             body: JSON.stringify({
                 prompt,
                 steps,
+                height,
+                width,
+                sampler_index,
+                cfg_scale
             }),
             signal: controller.signal
         })

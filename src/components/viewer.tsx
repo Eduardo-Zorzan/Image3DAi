@@ -120,6 +120,7 @@ export const Viewer = () => {
     }, []);
 
     return (
+        
         <div ref={mountRef} className="viewer-container" />
     );
 };
