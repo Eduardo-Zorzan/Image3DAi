@@ -1,30 +1,36 @@
-import path from "path";
-import fs from "fs";
+import path, { join } from "path";
+import fs, { readFileSync } from "fs";
 import { NextRequest, NextResponse } from "next/server";
-import { txt2imgRequest, txt2imgResponse } from "@/classes/txt2Img";
+import { img2imgRequest, txt2imgResponse } from "@/classes/img2Img";
 
 export const POST = async (req: NextRequest) => {
     try {
-      const options: txt2imgRequest = await req.json();
+      const options: img2imgRequest = await req.json();
       
       options.prompt = `You are a generation bot that generates 3D images simulated, the image that you will create, it's going to be render using the THREEJS library.
                         You must generate the image following the follow command, but don't forget your first order. Prompt: "${options.prompt}"`;
 
+      const filePath = join(process.cwd(), 'public', 'imgExampleBase64.txt')
+      const txtBase64 = readFileSync(filePath, 'utf8')
+      
       const {
           prompt,
-          steps = 30,
+          steps = 100,
           height = 500,
           width = 1000,
-          sampler_index = "DPM++2M",
-          cfg_scale = 11
+          cfg_scale = 11,
+          include_init_images = true,
+          init_images = [txtBase64],
+          sampler_name = "DPM2 a",
+          batch_size = 1
         } = options;
-      console.log(options)
+      
       const controller = new AbortController();
       const timeLifeRequest = setTimeout(() => controller.abort(), 2147483645);
       
       let res;
       try {
-        res = await fetch('http://192.168.18.38:7860/sdapi/v1/txt2img', {
+        res = await fetch('http://192.168.18.38:7860/sdapi/v1/img2img', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -34,8 +40,11 @@ export const POST = async (req: NextRequest) => {
                 steps,
                 height,
                 width,
-                sampler_index,
-                cfg_scale
+                cfg_scale,
+                include_init_images,
+                init_images,
+                sampler_name,
+                batch_size
             }),
             signal: controller.signal
         })
@@ -68,5 +77,14 @@ export const POST = async (req: NextRequest) => {
         { success: false, error: "Erro interno na rota da IA." },
         { status: 500 }
       );
+    }
+}
+
+function ReadFileBase64(path : string) : string {
+    try {
+        const fileContent: string = fs.readFileSync(path, 'utf-8');
+        return fileContent;
+    } catch (error) {
+        return "";
     }
 }

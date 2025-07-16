@@ -24,6 +24,7 @@ export const Prompt = ({returnLoading, returnPercentage} : PromptProps) => {
         const nameFile = document.getElementById("nameFile") as HTMLInputElement;
 
         const pooling = async () => {
+            setTimeout(() => {}, 1000);
             const interval = setInterval(async () => {
                 const progress = await fetch("/api/progress", {
                     method: "GET",
@@ -37,7 +38,7 @@ export const Prompt = ({returnLoading, returnPercentage} : PromptProps) => {
                         returnLoading(false);
                         clearInterval(interval);
                     }
-            }, 200)
+            }, 1000)
         }
 
         await pooling();
