@@ -1,36 +1,29 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+3D Environment Generator with Stable Diffusion & Three.js
+This was a quick project to experiment with the Stable Diffusion API for generating 2D images that can be simulated as 3D environments using Three.js. It also saves the generated images to a predetermined directory, so they can be opened at any time.
 
-## Getting Started
+Project Outcome & Challenges
+The project was partially successful. A few challenges arose:
 
-First, run the development server:
+The AI seemed to have a hard time generating seamless 3D environments.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+My GPU, which I used to run Stable Diffusion, doesn't support generating larger images.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+To run the project, you'll need to follow these steps.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Prerequisites
+Node.js, ThreeJS and npm.
+A working Stable Diffusion API instance on your local network.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Configure API Endpoint:
+You will need to adapt the routes in the code to the IP address where your Stable Diffusion instance is running.
 
-## Learn More
+Note: The configuration for the Stable Diffusion API varies depending on your GPU and operating system.
 
-To learn more about Next.js, take a look at the following resources:
+Application Architecture
+The application's architecture works as follows:
+Frontend (Next.js/React): The user interacts with the UI to submit a prompt.
+Internal API (Next.js API Route): The frontend communicates with an internal Next.js API.
+Stable Diffusion API: The internal API, in turn, communicates with the Stable Diffusion API.
+Image Saving: The internal API is also responsible for saving the generated image.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Thanks for checking out my project. If you have any comments or suggestions, feel free to share them.
