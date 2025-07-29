@@ -1,4 +1,5 @@
 3D Environment Generator with Stable Diffusion & Three.js
+
 This was a quick project to experiment with the Stable Diffusion API for generating 2D images that can be simulated as 3D environments using Three.js. It also saves the generated images to a predetermined directory, so they can be opened at any time.
 
 Project Outcome & Challenges
