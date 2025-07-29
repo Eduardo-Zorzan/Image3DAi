@@ -29,10 +29,8 @@ export const Viewer = () => {
         let scene: THREE.Scene;
         let camera: THREE.PerspectiveCamera;
         let controls: OrbitControls;
-        let torusMesh: THREE.Mesh;
         let loader: THREE.TextureLoader;
         let gui: GUI;
-        let animationFrameId: number;
 
         const init = () => {
             renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -46,12 +44,6 @@ export const Viewer = () => {
             renderer.setAnimationLoop(render);
 
             scene = new THREE.Scene();
-
-            torusMesh = new THREE.Mesh(
-                new THREE.TorusKnotGeometry(1, 0.4, 128, 128, 1, 3),
-                new THREE.MeshStandardMaterial({ roughness: params.roughness, metalness: params.metalness })
-            );
-            scene.add(torusMesh);
 
             camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 500);
             camera.position.set(0.0, 0.0, -6.0);
@@ -93,15 +85,6 @@ export const Viewer = () => {
         };
 
         const render = () => {
-            if (torusMesh) {
-                (torusMesh.material as THREE.MeshStandardMaterial).roughness = params.roughness;
-                (torusMesh.material as THREE.MeshStandardMaterial).metalness = params.metalness;
-
-                if (params.autoRotate) {
-                    torusMesh.rotation.y += 0.005;
-                }
-            }
-
             renderer.toneMappingExposure = params.exposure;
             controls.update();
             renderer.render(scene, camera);

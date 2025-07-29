@@ -10,8 +10,8 @@ export const POST = async (req: NextRequest) => {
       options.prompt = `You are a generation bot that generates 3D images simulated, the image that you will create, it's going to be render using the THREEJS library.
                         You must generate the image following the follow command, but don't forget your first order. Prompt: "${options.prompt}"`;
 
-      const filePath = join(process.cwd(), 'public', 'imgExampleBase64.txt')
-      const txtBase64 = readFileSync(filePath, 'utf8')
+      const filePath = join(process.cwd(), 'data', 'imgExampleBase64.txt');
+      const txtBase64 : string[] = readFileSync(filePath, 'utf8').split(",");
       
       const {
           prompt,
@@ -20,8 +20,8 @@ export const POST = async (req: NextRequest) => {
           width = 1000,
           cfg_scale = 11,
           include_init_images = true,
-          init_images = [txtBase64],
-          sampler_name = "DPM2 a",
+          init_images = txtBase64,
+          sampler_name = "Euler a",
           batch_size = 1
         } = options;
       
