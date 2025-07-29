@@ -22,6 +22,7 @@ You will need to adapt the routes in the code to the IP address where your Stabl
 Note: The configuration for the Stable Diffusion API varies depending on your GPU and operating system.
 
 Application Architecture
+
 The application's architecture works as follows:
 Frontend (Next.js/React): The user interacts with the UI to submit a prompt.
 Internal API (Next.js API Route): The frontend communicates with an internal Next.js API.
